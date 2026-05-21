@@ -79,12 +79,14 @@ export function SobreMatter() {
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {companies.map((c) => (
-            <div key={c.name} className="group p-6 rounded-2xl bg-card border border-border hover:bg-gradient-gold hover:text-primary-foreground transition-all cursor-default">
-              <div className="flex items-center justify-between mb-3">
+            <div key={c.name} className="group p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all hover:-translate-y-1 cursor-default">
+              <div className="flex items-center justify-between mb-4">
                 <h3 className="text-2xl font-bold">{c.name}</h3>
-                <ArrowUpRight className="w-5 h-5 opacity-50 group-hover:opacity-100 group-hover:rotate-45 transition-all" />
+                <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center group-hover:bg-primary transition-colors shrink-0">
+                  <ArrowUpRight className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors" />
+                </div>
               </div>
-              <p className="text-sm opacity-75">{c.tag}</p>
+              <p className="text-sm text-muted-foreground">{c.tag}</p>
             </div>
           ))}
         </div>

@@ -77,7 +77,7 @@ function Index() {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto py-5 px-3 space-y-5">
+        <nav className="sidebar-nav flex-1 overflow-y-auto py-5 px-3 space-y-5">
           {groups.map((g) => (
             <div key={g}>
               <p className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest mb-1.5 px-2">{g}</p>

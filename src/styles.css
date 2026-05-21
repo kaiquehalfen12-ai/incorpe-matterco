@@ -105,6 +105,11 @@
   h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
 }
 
+.sidebar-nav::-webkit-scrollbar { width: 4px; }
+.sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+.sidebar-nav::-webkit-scrollbar-thumb { background: #000; border-radius: 2px; }
+.sidebar-nav { scrollbar-width: thin; scrollbar-color: #000 transparent; }
+
 @layer utilities {
   .text-gradient-gold {
     background: var(--gradient-gold);

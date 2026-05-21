@@ -74,10 +74,6 @@ export function Resumo() {
               <p className="text-xs uppercase tracking-wider opacity-70">Total de módulos</p>
               <p className="text-3xl font-bold">11</p>
             </div>
-            <div className="p-4 rounded-xl bg-primary-foreground/10 backdrop-blur">
-              <p className="text-xs uppercase tracking-wider opacity-70">Empresas do ecossistema envolvidas</p>
-              <p className="text-3xl font-bold">4</p>
-            </div>
           </div>
         </div>
       </Card>

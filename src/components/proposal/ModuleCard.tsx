@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, DollarSign, Target, CheckCircle2, Sparkles, Plus } from "lucide-react";
+import { Clock, DollarSign, Target, CheckCircle2, Sparkles, Zap } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 export interface Module {
@@ -94,23 +94,17 @@ export function ModuleCard({ m }: { m: Module }) {
       </div>
 
       {m.optionalAddons && m.optionalAddons.length > 0 && (
-        <div className="mt-5 pt-5 border-t border-border">
-          <div className="flex items-center gap-2 mb-3">
-            <Plus className="w-3.5 h-3.5 text-primary" />
-            <p className="text-xs text-muted-foreground uppercase tracking-wider font-mono">Módulos complementares (opcionais)</p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {m.optionalAddons.map((a) => (
-              <div
-                key={a.name}
-                className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-primary/40 bg-primary/10 hover:bg-primary/20 transition-colors"
-              >
-                <span className="text-sm font-semibold text-foreground">{a.name}</span>
-                <span className="text-primary/60">·</span>
-                <span className="text-sm font-bold text-gradient-gold">{a.value}</span>
+        <div className={`grid gap-4 mt-4 ${m.optionalAddons.length > 1 ? "sm:grid-cols-2" : "sm:grid-cols-1 max-w-sm"}`}>
+          {m.optionalAddons.map((a) => (
+            <div key={a.name} className="flex items-center gap-3 p-4 rounded-xl bg-gradient-gold text-primary-foreground">
+              <Zap className="w-5 h-5 shrink-0" />
+              <div>
+                <p className="text-xs uppercase tracking-wider opacity-80">{a.name}</p>
+                <p className="font-bold text-lg">{a.value}</p>
+                <p className="text-xs opacity-70">Módulo opcional</p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       )}
     </Card>
