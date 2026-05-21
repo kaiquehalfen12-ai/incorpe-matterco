@@ -8,7 +8,18 @@ import {
   GraduationCap, Award, BookOpen,
   Palette, Layers, Eye,
   Rocket, MousePointerClick, DollarSign, ArrowUp, ArrowDown,
+  Info, Clock, RefreshCw, Building2, Flame, ChevronRight, LayoutDashboard,
+  PieChart, LineChart, Radio, Star,
 } from "lucide-react";
+
+function IllustrativeNote() {
+  return (
+    <div className="flex items-center gap-2 mt-4 px-3 py-2 rounded-lg bg-border/20 border border-border w-full">
+      <Info className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+      <p className="text-[11px] text-muted-foreground italic">Dados ilustrativos — referências para fins de apresentação da solução.</p>
+    </div>
+  );
+}
 
 // ============ SMART ROUTE ============
 export function SmartRoutePrototype() {
@@ -21,6 +32,23 @@ export function SmartRoutePrototype() {
     { name: "Governança & Priorização", weeks: "Sem 13-16", status: 10 },
   ];
 
+  const departments = [
+    { name: "Comercial", score: 72, gaps: 3, status: "Em andamento" },
+    { name: "Engenharia", score: 48, gaps: 7, status: "Crítico" },
+    { name: "Jurídico", score: 61, gaps: 4, status: "Atenção" },
+    { name: "Financeiro", score: 55, gaps: 5, status: "Atenção" },
+    { name: "TI / Sistemas", score: 38, gaps: 9, status: "Crítico" },
+    { name: "RH", score: 80, gaps: 2, status: "Saudável" },
+  ];
+
+  const recommendations = [
+    { priority: "P0", area: "TI / Sistemas", action: "Unificar ERP e BI em plataforma única", effort: "Alto" },
+    { priority: "P0", area: "Financeiro", action: "Automatizar esteira de inadimplência", effort: "Médio" },
+    { priority: "P1", area: "Engenharia", action: "Criar painel de acompanhamento de obras", effort: "Médio" },
+    { priority: "P1", area: "Comercial", action: "Implementar lead scoring em CRM", effort: "Baixo" },
+    { priority: "P2", area: "Jurídico", action: "Digitalizar fluxo de aprovação contratual", effort: "Alto" },
+  ];
+
   return (
     <div className="space-y-8">
       <Hero icon={Compass} eyebrow="Produto · Smart Route" title="Plano Estratégico de Escala" subtitle="Diagnóstico executivo, roadmap tecnológico e governança operacional para o próximo ciclo de crescimento." />
@@ -31,6 +59,8 @@ export function SmartRoutePrototype() {
         <KPI label="Gargalos identificados" value="17" sub="6 críticos" icon={AlertCircle} accent />
         <KPI label="Eficiência projetada" value="+38%" sub="vs. baseline" icon={TrendingUp} />
       </div>
+
+      <IllustrativeNote />
 
       <Card className="p-6 bg-card border-border">
         <div className="flex items-center justify-between mb-6">
@@ -52,6 +82,39 @@ export function SmartRoutePrototype() {
             </div>
           ))}
         </div>
+        <IllustrativeNote />
+      </Card>
+
+      {/* Departmental health */}
+      <Card className="p-6 bg-card border-border">
+        <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><Building2 className="w-4 h-4 text-primary" />Saúde operacional por área</h3>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {departments.map((d) => (
+            <div key={d.name} className="p-4 rounded-xl bg-background/50 border border-border">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-medium text-sm">{d.name}</span>
+                <Badge
+                  variant="outline"
+                  className={
+                    d.status === "Crítico" ? "border-destructive/40 text-destructive" :
+                    d.status === "Atenção" ? "border-primary/40 text-primary" :
+                    d.status === "Saudável" ? "border-green-500/40 text-green-500" :
+                    "border-border"
+                  }
+                >
+                  {d.status}
+                </Badge>
+              </div>
+              <div className="flex items-center justify-between text-xs text-muted-foreground mb-2">
+                <span>Score de maturidade</span>
+                <span className="font-bold text-foreground">{d.score}/100</span>
+              </div>
+              <Progress value={d.score} className="h-1.5 mb-2" />
+              <p className="text-xs text-muted-foreground">{d.gaps} gaps identificados</p>
+            </div>
+          ))}
+        </div>
+        <IllustrativeNote />
       </Card>
 
       <div className="grid md:grid-cols-2 gap-6">
@@ -74,10 +137,11 @@ export function SmartRoutePrototype() {
               </div>
             ))}
           </div>
+          <IllustrativeNote />
         </Card>
 
         <Card className="p-6 bg-card border-border">
-          <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><TrendingUp className="w-4 h-4 text-primary" />Indicadores executivos</h3>
+          <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><TrendingUp className="w-4 h-4 text-primary" />Indicadores executivos projetados</h3>
           <div className="space-y-4">
             {[
               { label: "Ciclo médio de aprovação", from: "18d", to: "6d", pct: 67 },
@@ -94,8 +158,31 @@ export function SmartRoutePrototype() {
               </div>
             ))}
           </div>
+          <IllustrativeNote />
         </Card>
       </div>
+
+      {/* Recommendations */}
+      <Card className="p-6 bg-card border-border">
+        <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><Flame className="w-4 h-4 text-primary" />Plano de ação — Recomendações priorizadas</h3>
+        <div className="space-y-3">
+          {recommendations.map((r) => (
+            <div key={r.action} className="flex items-start gap-3 p-3 rounded-lg bg-background/50 border border-border">
+              <Badge
+                variant="outline"
+                className={`shrink-0 ${r.priority === "P0" ? "border-destructive/40 text-destructive" : r.priority === "P1" ? "border-primary/40 text-primary" : "border-border"}`}
+              >
+                {r.priority}
+              </Badge>
+              <div className="flex-1">
+                <p className="text-sm font-medium">{r.action}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">Área: {r.area}</p>
+              </div>
+              <Badge variant="outline" className="text-xs shrink-0">Esforço: {r.effort}</Badge>
+            </div>
+          ))}
+        </div>
+      </Card>
     </div>
   );
 }
@@ -103,12 +190,20 @@ export function SmartRoutePrototype() {
 // ============ SMART CODE ============
 export function SmartCodePrototype() {
   const integrations = [
-    { name: "ERP", status: "online", latency: "42ms" },
-    { name: "BI", status: "online", latency: "120ms" },
-    { name: "WhatsApp Cloud API", status: "online", latency: "88ms" },
-    { name: "CRM", status: "online", latency: "30ms" },
-    { name: "Cobrança", status: "warning", latency: "780ms" },
-    { name: "RPA Engine", status: "online", latency: "55ms" },
+    { name: "ERP", status: "online", latency: "42ms", uptime: "99.9%" },
+    { name: "BI", status: "online", latency: "120ms", uptime: "99.7%" },
+    { name: "WhatsApp Cloud API", status: "online", latency: "88ms", uptime: "99.8%" },
+    { name: "CRM", status: "online", latency: "30ms", uptime: "100%" },
+    { name: "Cobrança", status: "warning", latency: "780ms", uptime: "97.2%" },
+    { name: "RPA Engine", status: "online", latency: "55ms", uptime: "99.5%" },
+  ];
+
+  const automations = [
+    { name: "Cobrança automática", runs: 1240, saved: "18h", status: "ativo" },
+    { name: "Distrato → alerta CRM", runs: 47, saved: "4h", status: "ativo" },
+    { name: "Boleto inadimplente → WhatsApp", runs: 832, saved: "12h", status: "ativo" },
+    { name: "Relatório executivo semanal", runs: 24, saved: "6h", status: "ativo" },
+    { name: "Aprovação esteira jurídica", runs: 318, saved: "22h", status: "revisão" },
   ];
 
   return (
@@ -122,11 +217,16 @@ export function SmartCodePrototype() {
         <KPI label="Horas poupadas /mês" value="640h" sub="≈ 4 FTEs" icon={Activity} />
       </div>
 
+      <IllustrativeNote />
+
       <div className="grid lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-2 p-6 bg-card border-border">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-bold">Painéis executivos — visão geral</h3>
-            <Badge className="bg-primary/10 border border-primary/30 text-primary">Tempo real</Badge>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <Badge className="bg-primary/10 border border-primary/30 text-primary">Tempo real</Badge>
+            </div>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             {[
@@ -147,6 +247,7 @@ export function SmartCodePrototype() {
               </div>
             ))}
           </div>
+          <IllustrativeNote />
         </Card>
 
         <Card className="p-6 bg-card border-border">
@@ -158,12 +259,39 @@ export function SmartCodePrototype() {
                   <span className={`w-2 h-2 rounded-full ${i.status === "online" ? "bg-primary animate-pulse" : "bg-destructive"}`} />
                   <span className="text-sm font-medium">{i.name}</span>
                 </div>
-                <span className="text-xs font-mono text-muted-foreground">{i.latency}</span>
+                <div className="text-right">
+                  <p className="text-xs font-mono text-muted-foreground">{i.latency}</p>
+                  <p className="text-[10px] text-muted-foreground">{i.uptime}</p>
+                </div>
               </div>
             ))}
           </div>
+          <IllustrativeNote />
         </Card>
       </div>
+
+      {/* Automations */}
+      <Card className="p-6 bg-card border-border">
+        <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><RefreshCw className="w-4 h-4 text-primary" />Automações em operação</h3>
+        <div className="space-y-3">
+          {automations.map((a) => (
+            <div key={a.name} className="flex items-center justify-between p-3 rounded-lg bg-background/50 border border-border">
+              <div className="flex items-center gap-3">
+                <span className={`w-2 h-2 rounded-full shrink-0 ${a.status === "ativo" ? "bg-primary" : "bg-primary/40"}`} />
+                <span className="text-sm font-medium">{a.name}</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="text-right hidden sm:block">
+                  <p className="text-xs text-muted-foreground">{a.runs} execuções</p>
+                  <p className="text-xs text-primary font-semibold">{a.saved} poupadas</p>
+                </div>
+                <Badge variant="outline" className={a.status === "ativo" ? "border-primary/30 text-primary" : "border-border"}>{a.status}</Badge>
+              </div>
+            </div>
+          ))}
+        </div>
+        <IllustrativeNote />
+      </Card>
 
       <Card className="p-6 bg-card border-border">
         <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><MessageSquare className="w-4 h-4 text-primary" />IA — Alertas operacionais recentes</h3>
@@ -173,14 +301,16 @@ export function SmartCodePrototype() {
             { type: "Atenção", msg: "Esteira jurídica acima da meta SLA (>10d). 4 processos parados.", time: "há 5h" },
             { type: "Insight", msg: "Conversão da campanha Bairros Planejados +34% — sugestão de reforço de budget.", time: "há 1d" },
             { type: "Crítico", msg: "Inadimplência cluster Norte subiu 1.8pp em 7 dias. Acionar cobrança.", time: "há 1d" },
+            { type: "Insight", msg: "Produtividade da equipe comercial +12% após automação de follow-up.", time: "há 2d" },
           ].map((a, i) => (
             <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-background/50 border border-border">
-              <Badge variant="outline" className={a.type === "Crítico" ? "border-destructive/40 text-destructive" : a.type === "Atenção" ? "border-primary/40 text-primary" : "border-border"}>{a.type}</Badge>
+              <Badge variant="outline" className={a.type === "Crítico" ? "border-destructive/40 text-destructive shrink-0" : a.type === "Atenção" ? "border-primary/40 text-primary shrink-0" : "border-border shrink-0"}>{a.type}</Badge>
               <p className="text-sm flex-1">{a.msg}</p>
-              <span className="text-xs text-muted-foreground">{a.time}</span>
+              <span className="text-xs text-muted-foreground shrink-0">{a.time}</span>
             </div>
           ))}
         </div>
+        <IllustrativeNote />
       </Card>
     </div>
   );
@@ -189,65 +319,121 @@ export function SmartCodePrototype() {
 // ============ SMART SQUAD ============
 export function SmartSquadPrototype() {
   const squad = [
-    { role: "AI Engineer", count: 1 },
-    { role: "Data Engineer", count: 1 },
-    { role: "Full-stack Dev", count: 2 },
-    { role: "Product / Tech Lead", count: 1 },
-    { role: "Consultor estratégico (CTO advisory)", count: 1 },
+    { role: "AI Engineer", count: 1, focus: "Modelos e casos de uso IA" },
+    { role: "Data Engineer", count: 1, focus: "Pipelines e integrações" },
+    { role: "Full-stack Dev", count: 2, focus: "Produtos e interfaces" },
+    { role: "Product / Tech Lead", count: 1, focus: "Priorização e roadmap" },
+    { role: "Consultor Estratégico (CTO advisory)", count: 1, focus: "Governança e visão" },
+  ];
+
+  const currentSprint = [
+    { task: "IA preditiva de inadimplência v2", status: "em andamento", assignee: "AI Eng", pct: 70 },
+    { task: "Painel CFO unificado", status: "em andamento", assignee: "Full-stack", pct: 45 },
+    { task: "Automação fluxo de boletos", status: "em revisão", assignee: "Full-stack", pct: 90 },
+    { task: "Chatbot interno RH", status: "backlog", assignee: "AI Eng", pct: 10 },
+    { task: "Replicação CRM em nova BU", status: "planejado", assignee: "Data Eng", pct: 0 },
+  ];
+
+  const velocity = [
+    { sprint: "Sprint 10", tickets: 31 },
+    { sprint: "Sprint 11", tickets: 34 },
+    { sprint: "Sprint 12", tickets: 29 },
+    { sprint: "Sprint 13", tickets: 41 },
+    { sprint: "Sprint 14", tickets: 38 },
   ];
 
   return (
     <div className="space-y-8">
       <Hero icon={Users} eyebrow="Produto · Smart Squad" title="Evolução contínua & Operação de Inteligência" subtitle="Time dedicado de IA aplicada, operando junto à organização todos os dias." />
 
-      <div className="grid md:grid-cols-3 gap-4">
+      <div className="grid md:grid-cols-4 gap-4">
         <KPI label="Sprint atual" value="#14" sub="ciclo de 2 semanas" icon={CalIcon} />
         <KPI label="Casos de uso de IA ativos" value="11" sub="+3 piloto" icon={Sparkles} />
         <KPI label="Tickets entregues /mês" value="38" sub="média 6 meses" icon={CheckCircle2} />
+        <KPI label="Velocity atual" value="38 pts" sub="+23% vs. início" icon={TrendingUp} />
       </div>
+
+      <IllustrativeNote />
 
       <div className="grid md:grid-cols-2 gap-6">
         <Card className="p-6 bg-card border-border">
           <h3 className="text-lg font-bold mb-4">Composição do squad</h3>
           <div className="space-y-2">
             {squad.map((s) => (
-              <div key={s.role} className="flex items-center justify-between p-3 rounded-lg bg-background/50 border border-border">
-                <span className="text-sm">{s.role}</span>
-                <Badge className="bg-primary/10 border border-primary/30 text-primary">{s.count}×</Badge>
+              <div key={s.role} className="flex items-start gap-3 p-3 rounded-lg bg-background/50 border border-border">
+                <Badge className="bg-primary/10 border border-primary/30 text-primary shrink-0">{s.count}×</Badge>
+                <div>
+                  <p className="text-sm font-medium">{s.role}</p>
+                  <p className="text-xs text-muted-foreground">{s.focus}</p>
+                </div>
               </div>
             ))}
           </div>
         </Card>
 
         <Card className="p-6 bg-card border-border">
-          <h3 className="text-lg font-bold mb-4">Backlog priorizado</h3>
-          <div className="space-y-2">
-            {[
-              { t: "IA preditiva de inadimplência v2", p: "P0" },
-              { t: "Painel CFO unificado", p: "P0" },
-              { t: "Automação fluxo de boletos", p: "P1" },
-              { t: "Chatbot interno RH", p: "P2" },
-              { t: "Replicação CRM em nova BU", p: "P1" },
-            ].map((i) => (
-              <div key={i.t} className="flex items-center justify-between p-3 rounded-lg bg-background/50 border border-border">
-                <span className="text-sm">{i.t}</span>
-                <Badge variant="outline" className={i.p === "P0" ? "border-destructive/40 text-destructive" : "border-border"}>{i.p}</Badge>
+          <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><Activity className="w-4 h-4 text-primary" />Sprint #14 — Em andamento</h3>
+          <div className="space-y-3">
+            {currentSprint.map((t) => (
+              <div key={t.task} className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium">{t.task}</span>
+                  <Badge
+                    variant="outline"
+                    className={
+                      t.status === "em andamento" ? "border-primary/40 text-primary text-[10px]" :
+                      t.status === "em revisão" ? "border-green-500/40 text-green-500 text-[10px]" :
+                      "border-border text-[10px]"
+                    }
+                  >
+                    {t.status}
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Progress value={t.pct} className="h-1.5 flex-1" />
+                  <span className="text-xs text-muted-foreground font-mono w-8 text-right">{t.pct}%</span>
+                </div>
+                <p className="text-[11px] text-muted-foreground">{t.assignee}</p>
               </div>
             ))}
           </div>
+          <IllustrativeNote />
         </Card>
       </div>
+
+      {/* Velocity */}
+      <Card className="p-6 bg-card border-border">
+        <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><LineChart className="w-4 h-4 text-primary" />Velocidade do squad — últimas sprints</h3>
+        <div className="flex items-end gap-3 h-28">
+          {velocity.map((v, i) => {
+            const maxTickets = Math.max(...velocity.map(x => x.tickets));
+            const height = (v.tickets / maxTickets) * 100;
+            return (
+              <div key={v.sprint} className="flex-1 flex flex-col items-center gap-2">
+                <span className="text-xs font-bold text-primary">{v.tickets}</span>
+                <div
+                  className="w-full rounded-t-md bg-gradient-gold transition-all"
+                  style={{ height: `${height}%` }}
+                />
+                <span className="text-[10px] text-muted-foreground text-center">{v.sprint.replace("Sprint ", "S")}</span>
+              </div>
+            );
+          })}
+        </div>
+        <IllustrativeNote />
+      </Card>
 
       <Card className="p-6 bg-card border-border">
         <h3 className="text-lg font-bold mb-4">Ritual de sustentação</h3>
         <div className="grid md:grid-cols-4 gap-3">
           {[
-            { d: "Daily", t: "15min · alinhamento rápido" },
-            { d: "Sprint planning", t: "Quinzenal · priorização" },
-            { d: "Review executivo", t: "Mensal · com a liderança" },
-            { d: "Roadmap review", t: "Trimestral · com C-level" },
+            { d: "Daily", t: "15min · alinhamento rápido", icon: Clock },
+            { d: "Sprint planning", t: "Quinzenal · priorização", icon: CalIcon },
+            { d: "Review executivo", t: "Mensal · com a liderança", icon: LayoutDashboard },
+            { d: "Roadmap review", t: "Trimestral · com C-level", icon: Target },
           ].map((r) => (
             <div key={r.d} className="p-4 rounded-xl bg-background/50 border border-border">
+              <r.icon className="w-4 h-4 text-primary mb-2" />
               <p className="font-bold">{r.d}</p>
               <p className="text-xs text-muted-foreground mt-1">{r.t}</p>
             </div>
@@ -261,10 +447,18 @@ export function SmartSquadPrototype() {
 // ============ MATTER ACADEMY ============
 export function MatterAcademyPrototype() {
   const belts = [
-    { name: "Faixa Branca", desc: "Fundamentos de IA, primeiros prompts e casos básicos", weeks: "Mês 1-3", color: "bg-white" },
-    { name: "Faixa Verde", desc: "IA aplicada ao seu trabalho, automações simples", weeks: "Mês 4-6", color: "bg-green-500" },
-    { name: "Faixa Marrom", desc: "Casos de negócio, design de soluções, integrações", weeks: "Mês 7-9", color: "bg-amber-700" },
-    { name: "Faixa Preta", desc: "Liderança em IA, propagação de cultura, governança", weeks: "Mês 10-12", color: "bg-black border border-border" },
+    { name: "Faixa Branca", desc: "Fundamentos de IA, primeiros prompts e casos básicos", weeks: "Mês 1-3", color: "bg-white", engagement: 94 },
+    { name: "Faixa Verde", desc: "IA aplicada ao seu trabalho, automações simples", weeks: "Mês 4-6", color: "bg-green-500", engagement: 87 },
+    { name: "Faixa Marrom", desc: "Casos de negócio, design de soluções, integrações", weeks: "Mês 7-9", color: "bg-amber-700", engagement: 79 },
+    { name: "Faixa Preta", desc: "Liderança em IA, propagação de cultura, governança", weeks: "Mês 10-12", color: "bg-black border border-border", engagement: 73 },
+  ];
+
+  const upcomingModules = [
+    { month: "Mês 1", module: "IA no dia a dia: prompts e fluxos", format: "Ao vivo", participants: 24 },
+    { month: "Mês 2", module: "Automação de tarefas recorrentes", format: "Ao vivo", participants: 22 },
+    { month: "Mês 3", module: "Avaliação Faixa Branca + certificação", format: "Presencial", participants: 20 },
+    { month: "Mês 4", module: "IA aplicada à área: mapeamento", format: "Ao vivo", participants: 18 },
+    { month: "Mês 5", module: "Projeto prático de automação", format: "Workshop", participants: 17 },
   ];
 
   return (
@@ -275,11 +469,13 @@ export function MatterAcademyPrototype() {
         <KPI label="Programas" value="4" sub="Scan · Shift · Next · Prime" icon={BookOpen} />
         <KPI label="Carga total (Next)" value="12m" sub="4 faixas progressivas" icon={Award} />
         <KPI label="Mín. participantes" value="20" sub="Shift / Next" icon={Users} />
-        <KPI label="Certificação" value="Sim" sub="Matter Academy" icon={Sparkles} />
+        <KPI label="Taxa de conclusão" value="88%" sub="média histórica" icon={Star} />
       </div>
 
+      <IllustrativeNote />
+
       <Card className="p-6 bg-card border-border">
-        <h3 className="text-lg font-bold mb-6">Jornada AI Next — 4 faixas</h3>
+        <h3 className="text-lg font-bold mb-6">Jornada AI Next — 4 faixas progressivas</h3>
         <div className="grid md:grid-cols-4 gap-3">
           {belts.map((b, i) => (
             <div key={b.name} className="relative p-5 rounded-2xl border border-border bg-background/50 hover:border-primary/40 transition-colors">
@@ -287,10 +483,36 @@ export function MatterAcademyPrototype() {
               <p className="text-xs text-muted-foreground font-mono uppercase tracking-wider mb-1">Etapa 0{i+1}</p>
               <h4 className="font-bold text-lg">{b.name}</h4>
               <p className="text-xs text-muted-foreground mt-2 mb-3 leading-relaxed">{b.desc}</p>
-              <Badge variant="outline" className="text-xs">{b.weeks}</Badge>
+              <Badge variant="outline" className="text-xs mb-3">{b.weeks}</Badge>
+              <div>
+                <div className="flex justify-between text-xs mb-1">
+                  <span className="text-muted-foreground">Engajamento médio</span>
+                  <span className="text-primary font-bold">{b.engagement}%</span>
+                </div>
+                <Progress value={b.engagement} className="h-1.5" />
+              </div>
             </div>
           ))}
         </div>
+        <IllustrativeNote />
+      </Card>
+
+      {/* Upcoming modules */}
+      <Card className="p-6 bg-card border-border">
+        <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><CalIcon className="w-4 h-4 text-primary" />Calendário de módulos — próximos 5</h3>
+        <div className="space-y-2">
+          {upcomingModules.map((m) => (
+            <div key={m.month} className="flex items-center gap-4 p-3 rounded-lg bg-background/50 border border-border">
+              <Badge variant="outline" className="text-xs shrink-0 w-14 justify-center">{m.month}</Badge>
+              <span className="text-sm flex-1 font-medium">{m.module}</span>
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-muted-foreground hidden sm:block">{m.format}</span>
+                <span className="text-xs font-mono text-primary">{m.participants} part.</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <IllustrativeNote />
       </Card>
 
       <div className="grid md:grid-cols-2 gap-6">
@@ -313,6 +535,7 @@ export function MatterAcademyPrototype() {
             ))}
             <p className="text-xs text-muted-foreground pt-2 border-t border-border">Sugestão: começar pelo Shift (linguagem comum) antes do Next.</p>
           </div>
+          <IllustrativeNote />
         </Card>
 
         <Card className="p-6 bg-card border-border">
@@ -341,6 +564,23 @@ export function MatterAcademyPrototype() {
 
 // ============ ALMABRANDS ============
 export function AlmabrandsPrototype() {
+  const brandScores = [
+    { dimension: "Reconhecimento regional", current: 48, target: 85 },
+    { dimension: "Percepção de qualidade", current: 62, target: 90 },
+    { dimension: "Diferenciação vs. concorrentes", current: 31, target: 78 },
+    { dimension: "Experiência no ponto de venda", current: 55, target: 88 },
+    { dimension: "Presença digital", current: 24, target: 75 },
+  ];
+
+  const campaignTimeline = [
+    { month: "Mês 1", deliverable: "Diagnóstico de marca & benchmark", status: "concluído" },
+    { month: "Mês 1", deliverable: "Território e plataforma de marca", status: "concluído" },
+    { month: "Mês 2", deliverable: "Identidade visual completa", status: "em andamento" },
+    { month: "Mês 2", deliverable: "Sinalização e fachada — briefing", status: "em andamento" },
+    { month: "Mês 2", deliverable: "Campanha institucional — lançamento", status: "planejado" },
+    { month: "Mês 2", deliverable: "Hub digital e redes sociais", status: "planejado" },
+  ];
+
   return (
     <div className="space-y-8">
       <Hero icon={Palette} eyebrow="Produto · Almabrands" title="Branding & Posicionamento" subtitle="Transformar o Shopping Auto Mall no principal polo automotivo da região." />
@@ -351,6 +591,8 @@ export function AlmabrandsPrototype() {
         <KPI label="Campanhas" value="6" sub="institucional + perf." icon={Sparkles} />
         <KPI label="Duração" value="2 meses" icon={CalIcon} />
       </div>
+
+      <IllustrativeNote />
 
       <Card className="p-6 bg-card border-border">
         <h3 className="text-lg font-bold mb-6">Arquitetura de marca</h3>
@@ -363,6 +605,54 @@ export function AlmabrandsPrototype() {
             <div key={b.t} className="p-5 rounded-2xl bg-background/50 border border-border">
               <p className="text-xs text-primary font-mono uppercase tracking-wider mb-2">{b.t}</p>
               <p className="text-sm leading-relaxed">{b.d}</p>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      {/* Brand health tracker */}
+      <Card className="p-6 bg-card border-border">
+        <h3 className="text-lg font-bold mb-2 flex items-center gap-2"><PieChart className="w-4 h-4 text-primary" />Brand health tracker — atual vs. meta</h3>
+        <p className="text-sm text-muted-foreground mb-6">Posicionamento da marca antes e após a entrega do Almabrands.</p>
+        <div className="space-y-4">
+          {brandScores.map((b) => (
+            <div key={b.dimension}>
+              <div className="flex items-center justify-between text-sm mb-1.5">
+                <span>{b.dimension}</span>
+                <span className="text-xs text-muted-foreground">
+                  <span className="text-muted-foreground">{b.current}</span>
+                  <span className="mx-1">→</span>
+                  <span className="text-primary font-bold">{b.target}</span>
+                </span>
+              </div>
+              <div className="relative h-2 rounded-full bg-background/50 border border-border overflow-hidden">
+                <div className="absolute inset-y-0 left-0 bg-border/60 rounded-full" style={{ width: `${b.current}%` }} />
+                <div className="absolute inset-y-0 left-0 bg-gradient-gold rounded-full opacity-30" style={{ width: `${b.target}%` }} />
+              </div>
+            </div>
+          ))}
+        </div>
+        <IllustrativeNote />
+      </Card>
+
+      {/* Campaign timeline */}
+      <Card className="p-6 bg-card border-border">
+        <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><Radio className="w-4 h-4 text-primary" />Pipeline de entregas</h3>
+        <div className="space-y-2">
+          {campaignTimeline.map((c, i) => (
+            <div key={i} className="flex items-center gap-4 p-3 rounded-lg bg-background/50 border border-border">
+              <Badge variant="outline" className="text-xs shrink-0 w-14 justify-center">{c.month}</Badge>
+              <span className="text-sm flex-1">{c.deliverable}</span>
+              <Badge
+                variant="outline"
+                className={
+                  c.status === "concluído" ? "border-primary/40 text-primary text-xs shrink-0" :
+                  c.status === "em andamento" ? "border-primary/20 text-primary/70 text-xs shrink-0" :
+                  "border-border text-xs shrink-0"
+                }
+              >
+                {c.status}
+              </Badge>
             </div>
           ))}
         </div>
@@ -398,6 +688,22 @@ export function AlmabrandsPrototype() {
 
 // ============ GROWTH MACHINE ============
 export function GrowthMachinePrototype() {
+  const monthlyGoals = [
+    { month: "Mês 1", leads: 800, actual: 820, conv: 4.2 },
+    { month: "Mês 2", leads: 1200, actual: 1150, conv: 5.8 },
+    { month: "Mês 3", leads: 1800, actual: 1940, conv: 7.1 },
+    { month: "Mês 4", leads: 2400, actual: 2600, conv: 8.3 },
+    { month: "Mês 5", leads: 3000, actual: 3200, conv: 9.4 },
+  ];
+
+  const budgetAllocation = [
+    { channel: "Google Ads", pct: 35, budget: "BRL 12.250" },
+    { channel: "Meta Ads", pct: 28, budget: "BRL 9.800" },
+    { channel: "Eventos & Ativações", pct: 20, budget: "BRL 7.000" },
+    { channel: "Influencers regionais", pct: 10, budget: "BRL 3.500" },
+    { channel: "WhatsApp & CRM", pct: 7, budget: "BRL 2.450" },
+  ];
+
   return (
     <div className="space-y-8">
       <Hero icon={Rocket} eyebrow="Produto · Growth Machine" title="Operação de Crescimento & Performance" subtitle="Tráfego, conversão, campanhas, eventos, parcerias, dados e acompanhamento comercial." />
@@ -408,6 +714,36 @@ export function GrowthMachinePrototype() {
         <KPI label="Conversão visita→venda" value="9.4%" sub="+4.1pp" icon={ArrowUp} />
         <KPI label="ROI mídia" value="6.8×" sub="trim. anterior 3.1×" icon={TrendingUp} />
       </div>
+
+      <IllustrativeNote />
+
+      {/* Monthly goal tracking */}
+      <Card className="p-6 bg-card border-border">
+        <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><Target className="w-4 h-4 text-primary" />Evolução de leads — meta vs. realizado</h3>
+        <div className="space-y-4">
+          {monthlyGoals.map((m) => {
+            const pct = Math.round((m.actual / m.leads) * 100);
+            const over = m.actual >= m.leads;
+            return (
+              <div key={m.month}>
+                <div className="flex items-center justify-between text-sm mb-1.5">
+                  <span className="font-medium">{m.month}</span>
+                  <div className="flex items-center gap-4">
+                    <span className="text-muted-foreground text-xs">Meta: {m.leads.toLocaleString()}</span>
+                    <span className={`font-bold text-sm ${over ? "text-primary" : "text-muted-foreground"}`}>
+                      {over ? <ArrowUp className="inline w-3 h-3" /> : <ArrowDown className="inline w-3 h-3" />}
+                      {" "}{m.actual.toLocaleString()} leads
+                    </span>
+                    <span className="text-xs text-muted-foreground">Conv. {m.conv}%</span>
+                  </div>
+                </div>
+                <Progress value={pct} className="h-2" />
+              </div>
+            );
+          })}
+        </div>
+        <IllustrativeNote />
+      </Card>
 
       <Card className="p-6 bg-card border-border">
         <h3 className="text-lg font-bold mb-6">Funil de performance</h3>
@@ -430,6 +766,7 @@ export function GrowthMachinePrototype() {
             </div>
           ))}
         </div>
+        <IllustrativeNote />
       </Card>
 
       <div className="grid lg:grid-cols-3 gap-6">
@@ -453,26 +790,45 @@ export function GrowthMachinePrototype() {
               </div>
             ))}
           </div>
+          <IllustrativeNote />
         </Card>
 
-        <Card className="p-6 bg-card border-border">
-          <h3 className="text-lg font-bold mb-4">Calendário de ativação</h3>
-          <div className="space-y-2">
-            {[
-              { m: "Mês 1", e: "Festival Multimarcas" },
-              { m: "Mês 2", e: "Drive-thru Test Day" },
-              { m: "Mês 3", e: "Família no Show" },
-              { m: "Mês 4", e: "Semana do Seminovo" },
-              { m: "Mês 5", e: "Black Show Auto" },
-              { m: "Mês 6", e: "Top Lojistas Awards" },
-            ].map((c) => (
-              <div key={c.m} className="flex items-center justify-between p-3 rounded-lg bg-background/50 border border-border">
-                <Badge variant="outline" className="text-xs">{c.m}</Badge>
-                <span className="text-xs">{c.e}</span>
-              </div>
-            ))}
-          </div>
-        </Card>
+        <div className="space-y-6">
+          <Card className="p-6 bg-card border-border">
+            <h3 className="text-lg font-bold mb-4">Calendário de ativação</h3>
+            <div className="space-y-2">
+              {[
+                { m: "Mês 1", e: "Festival Multimarcas" },
+                { m: "Mês 2", e: "Drive-thru Test Day" },
+                { m: "Mês 3", e: "Família no Show" },
+                { m: "Mês 4", e: "Semana do Seminovo" },
+                { m: "Mês 5", e: "Black Show Auto" },
+                { m: "Mês 6", e: "Top Lojistas Awards" },
+              ].map((c) => (
+                <div key={c.m} className="flex items-center justify-between p-3 rounded-lg bg-background/50 border border-border">
+                  <Badge variant="outline" className="text-xs">{c.m}</Badge>
+                  <span className="text-xs">{c.e}</span>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <Card className="p-6 bg-card border-border">
+            <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><DollarSign className="w-4 h-4 text-primary" />Alocação de budget</h3>
+            <div className="space-y-3">
+              {budgetAllocation.map((b) => (
+                <div key={b.channel}>
+                  <div className="flex items-center justify-between text-xs mb-1">
+                    <span className="text-muted-foreground">{b.channel}</span>
+                    <span className="font-mono text-primary">{b.budget}</span>
+                  </div>
+                  <Progress value={b.pct} className="h-1.5" />
+                </div>
+              ))}
+            </div>
+            <IllustrativeNote />
+          </Card>
+        </div>
       </div>
     </div>
   );

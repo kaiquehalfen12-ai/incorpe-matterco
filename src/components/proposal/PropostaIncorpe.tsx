@@ -1,8 +1,9 @@
 import { ProposalHeader } from "./ProposalHeader";
 import { ModuleCard, type Module } from "./ModuleCard";
 import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import incorpeLogo from "@/assets/incorpe-logo.png";
-import { Compass, Cpu, Users, GraduationCap, Calendar, Gift, Zap, Crown, BookOpen } from "lucide-react";
+import { Compass, Cpu, Users, GraduationCap, Calendar, Gift, Zap, Crown, BookOpen, CheckCircle2 } from "lucide-react";
 
 const modules: Module[] = [
   {
@@ -35,8 +36,8 @@ const modules: Module[] = [
       "Modelo de acompanhamento",
     ],
     duration: "4 meses",
-    investment: "BRL 28.880",
-    investmentNote: "Modelo 1+4 (entrada + 4 parcelas)",
+    investment: "1+4 de BRL 28.880",
+    investmentNote: "Entrada + 4 parcelas mensais",
     badge: "Fundação",
     highlight: true,
   },
@@ -95,7 +96,9 @@ const modules: Module[] = [
     ],
     duration: "A medida que o Smart Code for entregue",
     investment: "BRL 9.880 /mês",
-    investmentNote: "+ Smart Pulse Manutenção BRL 3.000/mês (opcionais)",
+    optionalAddons: [
+      { name: "Smart Pulse", value: "BRL 3.000 /mês" },
+    ],
   },
 ];
 
@@ -142,11 +145,42 @@ const academy = [
 ];
 
 const timeline = [
-  { phase: "M1", label: "Smart Route — Diagnóstico & Mapeamento" },
-  { phase: "M2", label: "Smart Route + Smart Code (Setup)" },
-  { phase: "M3", label: "Smart Code — Integrações & Painéis" },
-  { phase: "M4", label: "Smart Code — IA & Automação" },
-  { phase: "M5+", label: "Smart Squad — Evolução contínua" },
+  {
+    phase: "M1",
+    label: "Smart Route — Diagnóstico & Mapeamento",
+    activities: ["Diagnóstico executivo", "Imersão operacional", "Mapeamento inicial"],
+    modules: ["Smart Route"],
+    color: "bg-primary",
+  },
+  {
+    phase: "M2",
+    label: "Smart Route + Smart Code (Setup)",
+    activities: ["Finalização do Smart Route", "Setup do Smart Code", "Primeiras integrações"],
+    modules: ["Smart Route", "Smart Code"],
+    color: "bg-primary",
+  },
+  {
+    phase: "M3",
+    label: "Smart Code — Integrações & Painéis",
+    activities: ["ERP + BI integrado", "WhatsApp + CRM live", "Painéis executivos ativos"],
+    modules: ["Smart Code"],
+    color: "bg-primary",
+  },
+  {
+    phase: "M4",
+    label: "Smart Code — IA & Automação",
+    activities: ["Motor de alertas IA", "Automações de cobrança", "Central de indicadores"],
+    modules: ["Smart Code"],
+    color: "bg-primary",
+  },
+  {
+    phase: "M5+",
+    label: "Smart Squad — Evolução contínua",
+    activities: ["Squad dedicado ativo", "Novos casos de uso IA", "Consultoria estratégica mensal"],
+    modules: ["Smart Squad"],
+    color: "bg-primary/60",
+    ongoing: true,
+  },
 ];
 
 export function PropostaIncorpe() {
@@ -158,21 +192,6 @@ export function PropostaIncorpe() {
         subtitle="Eficiência operacional, tecnologia, escala e inteligência empresarial para a próxima década do grupo."
         logo={incorpeLogo}
       />
-
-      {/* KPI summary */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          { v: "4", l: "Módulos estratégicos" },
-          { v: "10+", l: "Meses de transformação" },
-          { v: "100%", l: "Foco em escala operacional" },
-          { v: "BRL 28.880", l: "Investimento de entrada" },
-        ].map((k) => (
-          <Card key={k.l} className="p-6 bg-card border-border">
-            <p className="text-3xl font-bold text-gradient-gold">{k.v}</p>
-            <p className="text-sm text-muted-foreground mt-1">{k.l}</p>
-          </Card>
-        ))}
-      </div>
 
       {/* Modules */}
       <div className="space-y-6">
@@ -229,19 +248,72 @@ export function PropostaIncorpe() {
       </Card>
 
       {/* Timeline */}
-      <Card className="p-8 md:p-10 bg-card border-border">
+      <Card className="p-8 md:p-10 bg-card border-border overflow-hidden">
         <p className="text-xs text-primary font-mono uppercase tracking-widest mb-2">Cronograma</p>
-        <h3 className="text-2xl md:text-3xl font-bold mb-8">Jornada de execução</h3>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+        <h3 className="text-2xl md:text-3xl font-bold mb-10">Jornada de execução</h3>
+
+        {/* Horizontal connector — desktop */}
+        <div className="hidden md:block">
+          <div className="relative">
+            {/* Connecting line */}
+            <div className="absolute top-6 left-6 right-6 h-px bg-border" />
+            <div className="grid grid-cols-5 gap-4">
+              {timeline.map((t, i) => (
+                <div key={t.phase} className="relative flex flex-col items-center text-center gap-4">
+                  {/* Node */}
+                  <div className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm text-primary-foreground shadow-gold ${t.color} ${t.ongoing ? "ring-2 ring-primary/40 ring-offset-2 ring-offset-card" : ""}`}>
+                    {t.phase}
+                    {t.ongoing && (
+                      <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-primary animate-pulse" />
+                    )}
+                  </div>
+                  {/* Content */}
+                  <div className="flex flex-col gap-2 w-full">
+                    <div className="flex flex-wrap justify-center gap-1">
+                      {t.modules.map(mod => (
+                        <Badge key={mod} className="bg-primary/10 border border-primary/20 text-primary text-[10px] px-1.5 py-0.5">{mod}</Badge>
+                      ))}
+                    </div>
+                    <p className="text-xs font-semibold leading-snug">{t.label}</p>
+                    <ul className="space-y-1">
+                      {t.activities.map(act => (
+                        <li key={act} className="text-[11px] text-muted-foreground flex items-start gap-1 text-left">
+                          <CheckCircle2 className="w-3 h-3 text-primary/60 shrink-0 mt-px" />{act}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Vertical timeline — mobile */}
+        <div className="md:hidden space-y-0">
           {timeline.map((t, i) => (
-            <div key={t.phase} className="relative">
-              <div className="p-5 rounded-2xl border border-border bg-background/50 hover:border-primary/50 transition-colors h-full">
-                <div className="text-2xl font-bold text-gradient-gold mb-2">{t.phase}</div>
-                <p className="text-xs text-muted-foreground leading-snug">{t.label}</p>
+            <div key={t.phase} className="flex gap-4">
+              <div className="flex flex-col items-center">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs text-primary-foreground shrink-0 shadow-gold ${t.color} ${t.ongoing ? "ring-2 ring-primary/40 ring-offset-2 ring-offset-card" : ""}`}>
+                  {t.phase}
+                </div>
+                {i < timeline.length - 1 && <div className="w-px flex-1 bg-border my-1 min-h-[2rem]" />}
               </div>
-              {i < timeline.length - 1 && (
-                <div className="hidden md:block absolute top-1/2 -right-2 w-4 h-px bg-primary/40" />
-              )}
+              <div className="pb-8 pt-1.5 flex-1">
+                <div className="flex flex-wrap gap-1 mb-1">
+                  {t.modules.map(mod => (
+                    <Badge key={mod} className="bg-primary/10 border border-primary/20 text-primary text-[10px] px-1.5 py-0.5">{mod}</Badge>
+                  ))}
+                </div>
+                <p className="text-sm font-semibold mb-2">{t.label}</p>
+                <ul className="space-y-1">
+                  {t.activities.map(act => (
+                    <li key={act} className="text-xs text-muted-foreground flex items-start gap-1.5">
+                      <CheckCircle2 className="w-3 h-3 text-primary/60 shrink-0 mt-px" />{act}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>

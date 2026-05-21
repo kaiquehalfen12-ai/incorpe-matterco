@@ -10,7 +10,7 @@ import {
   SmartRoutePrototype, SmartCodePrototype, SmartSquadPrototype,
   MatterAcademyPrototype, AlmabrandsPrototype, GrowthMachinePrototype,
 } from "@/components/proposal/Prototypes";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -47,70 +47,114 @@ function Index() {
 
   const groups = Array.from(new Set(tabs.map(t => t.group)));
 
+  const handleTabClick = (id: TabId) => {
+    setActive(id);
+    setNavOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <main className="min-h-screen">
-      {/* Top bar */}
-      <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-xl">
-        <div className="max-w-[1400px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <img src={matterLogo} alt="Matter&Co." className="h-7" />
-            <span className="hidden md:block text-xs text-muted-foreground font-mono uppercase tracking-widest border-l border-border pl-3">Proposta · INCORPE + Show Auto Mall</span>
-          </div>
-          <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setNavOpen(!navOpen)} aria-label="Abrir menu">
-            {navOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </Button>
+    <div className="flex min-h-screen">
+      {/* Mobile backdrop */}
+      {navOpen && (
+        <div
+          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 lg:hidden"
+          onClick={() => setNavOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 w-64 flex flex-col border-r border-border backdrop-blur-xl transition-transform duration-300 ease-in-out ${navOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
+        style={{ background: "oklch(0.10 0.008 80 / 0.97)" }}
+      >
+        {/* Logo */}
+        <div className="p-5 border-b border-border shrink-0">
+          <img src={matterLogo} alt="Matter&Co." className="h-7" />
+          <p className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest mt-2 leading-relaxed">
+            Proposta · INCORPE<br />+ Show Auto Mall
+          </p>
         </div>
 
-        {/* Tab nav */}
-        <nav className={`${navOpen ? "block" : "hidden"} lg:block border-t border-border bg-card/50`}>
-          <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-3 flex flex-wrap gap-x-6 gap-y-3 items-center">
-            {groups.map((g) => (
-              <div key={g} className="flex items-center gap-2">
-                <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest mr-1 hidden md:inline">{g}</span>
-                <div className="flex flex-wrap gap-1">
-                  {tabs.filter(t => t.group === g).map(t => (
-                    <button
-                      key={t.id}
-                      onClick={() => { setActive(t.id); setNavOpen(false); }}
-                      className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
-                        active === t.id
-                          ? "bg-primary text-primary-foreground shadow-gold"
-                          : "bg-background/50 border border-border text-muted-foreground hover:text-foreground hover:border-primary/30"
-                      }`}
-                    >
-                      {t.label}
-                    </button>
-                  ))}
-                </div>
+        {/* Navigation */}
+        <nav className="flex-1 overflow-y-auto py-5 px-3 space-y-5">
+          {groups.map((g) => (
+            <div key={g}>
+              <p className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest mb-1.5 px-2">{g}</p>
+              <div className="space-y-0.5">
+                {tabs.filter(t => t.group === g).map(t => (
+                  <button
+                    key={t.id}
+                    onClick={() => handleTabClick(t.id)}
+                    className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-all flex items-center justify-between group ${
+                      active === t.id
+                        ? "bg-primary text-primary-foreground shadow-gold"
+                        : "text-muted-foreground hover:text-foreground hover:bg-border/20"
+                    }`}
+                  >
+                    <span>{t.label}</span>
+                    {active === t.id && <ChevronRight className="w-3.5 h-3.5 shrink-0" />}
+                  </button>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </nav>
-      </header>
 
-      <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-10 md:py-16">
-        {active === "sobre" && <SobreMatter />}
-        {active === "cliente" && <Cliente />}
-        {active === "incorpe" && <PropostaIncorpe />}
-        {active === "samall" && <PropostaShowAutoMall />}
-        {active === "resumo" && <Resumo />}
-        {active === "p-route" && <SmartRoutePrototype />}
-        {active === "p-code" && <SmartCodePrototype />}
-        {active === "p-squad" && <SmartSquadPrototype />}
-        {active === "p-academy" && <MatterAcademyPrototype />}
-        {active === "p-alma" && <AlmabrandsPrototype />}
-        {active === "p-growth" && <GrowthMachinePrototype />}
-      </div>
-
-      <footer className="border-t border-border bg-card/30 py-8 mt-20">
-        <div className="max-w-[1400px] mx-auto px-4 md:px-8 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <img src={matterLogo} alt="Matter&Co." className="h-6 opacity-70" />
-            <span className="text-xs text-muted-foreground">© 2026 Matter&Co. — Inteligência de negócios.</span>
-          </div>
-          <span className="text-xs text-muted-foreground font-mono">Proposta 21.05.2026</span>
+        {/* Sidebar footer */}
+        <div className="p-4 border-t border-border shrink-0">
+          <p className="text-[10px] text-muted-foreground font-mono">Proposta · 21.05.2026</p>
+          <p className="text-[10px] text-muted-foreground font-mono mt-0.5 opacity-60">© 2026 Matter&Co.</p>
         </div>
-      </footer>
-    </main>
+      </aside>
+
+      {/* Main content */}
+      <div className="flex-1 lg:ml-64 flex flex-col min-h-screen">
+        {/* Mobile top bar */}
+        <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur-xl lg:hidden shrink-0">
+          <div className="px-4 h-14 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <img src={matterLogo} alt="Matter&Co." className="h-6" />
+              <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
+                {tabs.find(t => t.id === active)?.label}
+              </span>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="shrink-0"
+              onClick={() => setNavOpen(!navOpen)}
+              aria-label="Menu"
+            >
+              {navOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </Button>
+          </div>
+        </header>
+
+        <main className="flex-1 px-4 md:px-10 py-10 md:py-14 w-full max-w-[1100px]">
+          {active === "sobre" && <SobreMatter />}
+          {active === "cliente" && <Cliente />}
+          {active === "incorpe" && <PropostaIncorpe />}
+          {active === "samall" && <PropostaShowAutoMall />}
+          {active === "resumo" && <Resumo />}
+          {active === "p-route" && <SmartRoutePrototype />}
+          {active === "p-code" && <SmartCodePrototype />}
+          {active === "p-squad" && <SmartSquadPrototype />}
+          {active === "p-academy" && <MatterAcademyPrototype />}
+          {active === "p-alma" && <AlmabrandsPrototype />}
+          {active === "p-growth" && <GrowthMachinePrototype />}
+        </main>
+
+        <footer className="border-t border-border bg-card/30 py-8 mt-10">
+          <div className="px-4 md:px-10 max-w-[1100px] flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <img src={matterLogo} alt="Matter&Co." className="h-6 opacity-70" />
+              <span className="text-xs text-muted-foreground">© 2026 Matter&Co. — Inteligência de negócios.</span>
+            </div>
+            <span className="text-xs text-muted-foreground font-mono">Proposta 21.05.2026</span>
+          </div>
+        </footer>
+      </div>
+    </div>
   );
 }
