@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import matterLogo from "@/assets/matter-logo.png";
 import { SobreMatter } from "@/components/proposal/SobreMatter";
-import { Cliente } from "@/components/proposal/Cliente";
+import { ClienteIncorpe, ClienteShowAutoMall } from "@/components/proposal/Cliente";
 import { PropostaIncorpe } from "@/components/proposal/PropostaIncorpe";
 import { PropostaShowAutoMall } from "@/components/proposal/PropostaShowAutoMall";
 import { Resumo } from "@/components/proposal/Resumo";
@@ -24,12 +24,13 @@ export const Route = createFileRoute("/")({
 });
 
 type TabId =
-  | "sobre" | "cliente" | "incorpe" | "samall" | "resumo"
+  | "sobre" | "cliente-incorpe" | "cliente-sam" | "incorpe" | "samall" | "resumo"
   | "p-route" | "p-code" | "p-squad" | "p-academy" | "p-alma" | "p-growth";
 
 const tabs: { id: TabId; label: string; group: string }[] = [
   { id: "sobre", label: "Sobre a Matter", group: "Institucional" },
-  { id: "cliente", label: "Cliente", group: "Institucional" },
+  { id: "cliente-incorpe", label: "INCORPE", group: "Clientes" },
+  { id: "cliente-sam", label: "Show Auto Mall", group: "Clientes" },
   { id: "incorpe", label: "Proposta Incorpe", group: "Propostas" },
   { id: "samall", label: "Proposta Show Auto Mall", group: "Propostas" },
   { id: "resumo", label: "Resumo Estratégico", group: "Propostas" },
@@ -133,7 +134,8 @@ function Index() {
 
         <main className="flex-1 px-4 md:px-10 py-10 md:py-14 w-full max-w-[1100px]">
           {active === "sobre" && <SobreMatter />}
-          {active === "cliente" && <Cliente />}
+          {active === "cliente-incorpe" && <ClienteIncorpe />}
+          {active === "cliente-sam" && <ClienteShowAutoMall />}
           {active === "incorpe" && <PropostaIncorpe />}
           {active === "samall" && <PropostaShowAutoMall />}
           {active === "resumo" && <Resumo />}
