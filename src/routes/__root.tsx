@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Proposta Comercial | Incorpe + Show Auto Mall" },
+      { name: "description", content: "Proposta Comercial Matter&Co - Incorpe + Show Auto Mall" },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Proposta Comercial | Incorpe + Show Auto Mall" },
+      { property: "og:description", content: "Proposta Comercial Matter&Co - Incorpe + Show Auto Mall" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Proposta Comercial | Incorpe + Show Auto Mall" },
+      { name: "twitter:description", content: "Proposta Comercial Matter&Co - Incorpe + Show Auto Mall" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b2d2ee63-90de-4f4b-b8d8-60cfe93ab110/id-preview-c72c167d--de516797-a789-4717-bfb8-374064181c93.lovable.app-1779378650079.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b2d2ee63-90de-4f4b-b8d8-60cfe93ab110/id-preview-c72c167d--de516797-a789-4717-bfb8-374064181c93.lovable.app-1779378650079.png" },
     ],
     links: [
       {
