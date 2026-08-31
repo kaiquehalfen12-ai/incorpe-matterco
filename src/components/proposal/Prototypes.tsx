@@ -11,6 +11,15 @@ import {
   LineChart, Star,
 } from "lucide-react";
 
+function PositioningNote({ text }: { text: string }) {
+  return (
+    <div className="flex items-start gap-3 px-5 py-4 rounded-xl bg-primary/5 border border-primary/20">
+      <Sparkles className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+      <p className="text-sm text-foreground/80 leading-relaxed">{text}</p>
+    </div>
+  );
+}
+
 function IllustrativeNote() {
   return (
     <div className="flex items-center gap-2 mt-4 px-3 py-2 rounded-lg bg-border/20 border border-border w-full">
@@ -51,6 +60,8 @@ export function SmartRoutePrototype() {
   return (
     <div className="space-y-8">
       <Hero icon={Compass} eyebrow="Produto · Smart Route" title="Plano Estratégico de Escala" subtitle="Diagnóstico executivo, roadmap tecnológico e governança operacional para o próximo ciclo de crescimento." />
+
+      <PositioningNote text="Planejamento estratégico voltado para o futuro do mercado, com foco em IA, transformação digital e novas competências organizacionais." />
 
       <div className="grid md:grid-cols-4 gap-4">
         <KPI label="Fase atual" value="3/6" icon={Activity} />
@@ -209,6 +220,8 @@ export function SmartCodePrototype() {
     <div className="space-y-8">
       <Hero icon={Cpu} eyebrow="Produto · Smart Code" title="Núcleo de Tecnologia, IA & Automação" subtitle="Do diagnóstico ao MVP em produção — operação orientada por inteligência." />
 
+      <PositioningNote text="Aplicativo de gestão exclusivo para o seu negócio, com as principais integrações do seu sistema para gerenciamento em um só lugar da sua estratégia de negócio." />
+
       <div className="grid md:grid-cols-4 gap-4">
         <KPI label="Automações ativas" value="47" sub="+9 esta semana" icon={Zap} />
         <KPI label="Integrações" value="12/14" sub="2 em deploy" icon={Database} />
@@ -345,6 +358,8 @@ export function SmartSquadPrototype() {
     <div className="space-y-8">
       <Hero icon={Users} eyebrow="Produto · Smart Squad" title="Evolução contínua & Operação de Inteligência" subtitle="Time dedicado de IA aplicada, operando junto à organização todos os dias." />
 
+      <PositioningNote text="Sustentação e evolução contínua da tecnologia e da inteligência aplicada, com um time dedicado operando lado a lado com a liderança da Incorpe após a entrega do Smart Route e do Smart Code." />
+
       <div className="grid md:grid-cols-4 gap-4">
         <KPI label="Sprint atual" value="#14" sub="ciclo de 2 semanas" icon={CalIcon} />
         <KPI label="Casos de uso de IA ativos" value="11" sub="+3 piloto" icon={Sparkles} />
@@ -464,8 +479,10 @@ export function MatterAcademyPrototype() {
     <div className="space-y-8">
       <Hero icon={GraduationCap} eyebrow="Produto · Matter Academy" title="Capacitação executiva em IA aplicada" subtitle="Tirar o medo → Gerar linguagem comum → Destravar decisões." />
 
+      <PositioningNote text="AI Shift: imersão de 8 a 16 horas focada em destravar e encantar líderes e executivos no uso prático da IA nos negócios. AI Next: aulas semanais de 1 hora com evolução por faixas — da fundamentação à orquestração geral de IA." />
+
       <div className="grid md:grid-cols-4 gap-4">
-        <KPI label="Programas" value="4" sub="Scan · Shift · Next · Prime" icon={BookOpen} />
+        <KPI label="Programas" value="2" sub="Shift · Next" icon={BookOpen} />
         <KPI label="Carga total (Next)" value="12m" sub="4 faixas progressivas" icon={Award} />
         <KPI label="Mín. participantes" value="20" sub="Shift / Next" icon={Users} />
         <KPI label="Taxa de conclusão" value="88%" sub="média histórica" icon={Star} />
@@ -541,10 +558,8 @@ export function MatterAcademyPrototype() {
           <h3 className="text-lg font-bold mb-4">Investimento — visão consolidada</h3>
           <div className="space-y-2">
             {[
-              { p: "AI Scan", v: "Gratuito", n: "2 semanas" },
               { p: "AI Shift", v: "BRL 980/pessoa", n: "20 part. = BRL 19.600" },
               { p: "AI Next", v: "BRL 250/pessoa/mês", n: "20 part. = BRL 5.000/mês" },
-              { p: "AI Next Prime", v: "BRL 500/pessoa/mês", n: "min. 4 = BRL 2.000/mês" },
             ].map((i) => (
               <div key={i.p} className="flex items-center justify-between p-3 rounded-lg bg-background/50 border border-border">
                 <div>
