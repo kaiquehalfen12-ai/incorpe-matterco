@@ -461,10 +461,28 @@ export function SmartSquadPrototype() {
 // ============ MATTER ACADEMY ============
 export function MatterAcademyPrototype() {
   const belts = [
-    { name: "Faixa Branca", desc: "Fundamentos de IA, primeiros prompts e casos básicos", weeks: "Mês 1-3", color: "bg-white", engagement: 94 },
-    { name: "Faixa Verde", desc: "IA aplicada ao seu trabalho, automações simples", weeks: "Mês 4-6", color: "bg-green-500", engagement: 87 },
-    { name: "Faixa Marrom", desc: "Casos de negócio, design de soluções, integrações", weeks: "Mês 7-9", color: "bg-amber-700", engagement: 79 },
-    { name: "Faixa Preta", desc: "Liderança em IA, propagação de cultura, governança", weeks: "Mês 10-12", color: "bg-black border border-border", engagement: 73 },
+    { name: "Faixa Branca", desc: "Fundamentos da IA e primeiros fluxos de aplicação — linguagem, contexto, ferramentas e primeiros usos conectados ao trabalho real.", weeks: "12 semanas", color: "bg-white", engagement: 94 },
+    { name: "Faixa Verde", desc: "Aplicação prática de IA em processos e áreas de negócio, com autonomia inicial para redesenhar fluxos e gerar resultados tangíveis.", weeks: "12 semanas", color: "bg-green-500", engagement: 87 },
+    { name: "Faixa Marrom", desc: "Criação de produtos, soluções e novas entregas com IA — a aplicação passa a gerar novos outputs e frentes de inovação.", weeks: "12 semanas", color: "bg-amber-700", engagement: 79 },
+    { name: "Faixa Preta", desc: "Estratégia, governança e multiplicação interna — capacidade de liderar, orientar e expandir o uso de IA de forma transversal.", weeks: "12 semanas", color: "bg-black border border-border", engagement: 73 },
+  ];
+
+  const nextFormats = [
+    { name: "AI Next Aberto", desc: "Turmas abertas para profissionais e grupos mistos que buscam evolução contínua em IA aplicada, com progressão por faixas, comunidade e repertório vivo." },
+    { name: "AI Next In Company", desc: "Programa corporativo estruturado para desenvolver a base da empresa, com customização de contexto e priorização de faixas conforme diagnóstico (AI Scan)." },
+    { name: "AI Next Prime", desc: "Versão mais densa e estratégica, voltada a grupos reduzidos com demanda de maior aprofundamento, proximidade e desdobramento executivo." },
+  ];
+
+  const shiftVariants = [
+    { area: "Vendas", desc: "Prospecção, qualificação, propostas e CRM com IA." },
+    { area: "Marketing", desc: "Conteúdo, campanhas, análise e insights com IA." },
+    { area: "Financeiro", desc: "Relatórios, previsibilidade, controle e leitura analítica." },
+    { area: "RH / People", desc: "Recrutamento, desenvolvimento e analytics de pessoas." },
+    { area: "Jurídico", desc: "Análise contratual, compliance, pesquisa e apoio regulatório." },
+    { area: "Operações", desc: "Processos, logística, eficiência e fluxo operacional." },
+    { area: "Tecnologia", desc: "Desenvolvimento, dados, documentação e arquitetura." },
+    { area: "Atendimento", desc: "Experiência do cliente, suporte e retenção." },
+    { area: "Customizado", desc: "Foco definido a partir do diagnóstico organizacional (AI Scan)." },
   ];
 
   const upcomingModules = [
@@ -507,6 +525,34 @@ export function MatterAcademyPrototype() {
                 </div>
                 <Progress value={b.engagement} className="h-1.5" />
               </div>
+            </div>
+          ))}
+        </div>
+        <IllustrativeNote />
+      </Card>
+
+      {/* AI Next formats */}
+      <Card className="p-6 bg-card border-border">
+        <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><Layers className="w-4 h-4 text-primary" />AI Next — Formatos de programa</h3>
+        <div className="grid md:grid-cols-3 gap-4">
+          {nextFormats.map((f) => (
+            <div key={f.name} className="p-5 rounded-2xl border border-border bg-background/50 hover:border-primary/40 transition-colors">
+              <h4 className="font-bold mb-2">{f.name}</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      {/* AI Shift variants */}
+      <Card className="p-6 bg-card border-border">
+        <h3 className="text-lg font-bold mb-1 flex items-center gap-2"><Zap className="w-4 h-4 text-primary" />AI Shift — Variantes por área</h3>
+        <p className="text-xs text-muted-foreground mb-4">Mesma metodologia — imersão de 8h (5 blocos: diagnóstico, benchmark, redesenho, prototipação, síntese) ou 16h (2 dias) — adaptada ao contexto de cada área.</p>
+        <div className="grid md:grid-cols-3 gap-3">
+          {shiftVariants.map((v) => (
+            <div key={v.area} className="p-4 rounded-xl bg-background/50 border border-border">
+              <p className="font-semibold text-sm mb-1">{v.area}</p>
+              <p className="text-xs text-muted-foreground">{v.desc}</p>
             </div>
           ))}
         </div>
